@@ -1,15 +1,10 @@
 import { Component } from '@angular/core';
-import { OcrUploaderComponent } from './components/ocr/ocr.component';
-import { HttpClientModule } from '@angular/common/http';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [HttpClientModule,OcrUploaderComponent],
-  template: `<app-ocr-uploader></app-ocr-uploader>`,
-  //templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  imports: [RouterOutlet],
+  template: `<router-outlet></router-outlet>`
 })
-export class AppComponent {
-  title = 'ocr-text-extractor';
-}
+export class AppComponent {}

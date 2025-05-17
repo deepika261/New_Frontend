@@ -1,17 +1,18 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { OcrService } from '../../services/ocr.service';
+import { OcrService } from '../../services/dashboard.service';
 import { HttpClientModule } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-ocr-uploader',
   standalone: true,
-  imports: [CommonModule, FormsModule, HttpClientModule],
-  templateUrl: './ocr.component.html',
-  styleUrls: ['./ocr.component.css']
+  imports: [CommonModule, RouterModule, FormsModule, HttpClientModule],
+  templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.css']
 })
-export class OcrUploaderComponent {
+export class DashboardComponent {
   selectedFile: File | null = null;
   extractedText = '';
   statusMessage = '';
@@ -32,19 +33,6 @@ export class OcrUploaderComponent {
     }
   }
 
-  /*onFileSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (input.files?.length) {
-      this.selectedFile = input.files[0];
-    }
-  }*/
-
-  // onFileSelected(event: any) {
-  //   const file = event.target.files[0];
-  //   if (file) {
-  //     this.selectedFile = file;
-  //   }
-  // }
 
   uploadFile(): void {
     this.statusMessage = '';
@@ -65,7 +53,7 @@ export class OcrUploaderComponent {
         this.statusMessage = err?.errorr?.message || 'Upload failed. Server error.';
       }
     });
-  } 
+  }
 
   getExtractedText(): void {
     this.ocrService.getExtractedText().subscribe({
@@ -110,5 +98,18 @@ copyText() {
     }, 2000); // show "Copied!" for 2 seconds
   }
 }
+logout(): void {
+  // Clear any auth tokens or session data if used
+  // Redirect to login page
+  localStorage.clear(); // Optional: if you're storing session info
+  window.location.href = '/home'; // or use Angular router: this.router.navigate(['/login']);
+}
+viewHistory(): void {
+  // Navigate to history page (example path: '/history')
+  window.location.href = '/history'; // or use Angular Router: this.router.navigate(['/history']);
+}
+
+
+
 
 }

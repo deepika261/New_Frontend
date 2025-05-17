@@ -8,6 +8,9 @@
       "jasmine"
     ]
   },
+  "angularCompilerOptions": {
+    "strictTemplates": false
+  },
   "include": [
     "src/**/*.spec.ts",
     "src/**/*.d.ts"
