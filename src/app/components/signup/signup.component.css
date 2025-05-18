@@ -1,19 +1,65 @@
-/* .container {
-    max-width: 500px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  
-  .form-group {
-    margin-bottom: 15px;
-  }
-  
-  button {
-    width: 100%;
-  }
-  
-  .text-danger {
-    text-align: center;
-    margin-top: 10px;
-  }
-   */
+.signup-container {
+  background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+  padding: 30px;
+}
+
+.signup-card {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 16px;
+  background-color: #ffffff;
+}
+
+.form-control {
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 15px;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+  border-radius: 8px;
+  padding: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.text-danger {
+  font-size: 13px;
+}
+
+/* Password toggle button */
+.position-relative {
+  position: relative;
+}
+
+.password-toggle {
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  padding: 0.25rem 0.35rem;
+  font-size: 13px;
+  cursor: pointer;
+  user-select: none;
+  color: #6c757d;
+}
+.password-toggle:hover {
+  color: #495057; /* slightly darker on hover */
+  background: transparent !important;
+  border: none !important;
+}
+
+.password-toggle:focus {
+  outline: none;
+  box-shadow: none;
+  border: none;
+  background: transparent;
+}

@@ -45,4 +45,10 @@ export class LoginComponent {
       this.isLoginFailed = true;
     }
   }
+  resetLoginError() {
+  this.isLoginFailed = false;
+  this.errorMessage = '';
+}
+
+
 }

@@ -1,4 +1,76 @@
-<div class="container mt-5 justify-content-center">
+<div class="signup-container d-flex align-items-center justify-content-center min-vh-100">
+  <div class="card p-4 shadow-lg signup-card">
+    <h3 class="text-center mb-4 text-primary">Sign up</h3>
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" novalidate>
+
+      <!-- Email Field -->
+      <div class="form-group mb-3">
+        <label for="email" class="form-label fw-semibold">Email</label>
+        <input
+          type="email"
+          id="email"
+          class="form-control"
+          formControlName="email"
+          placeholder="Enter your email"
+          autocomplete="email"
+          (focus)="resetSignUpError()"
+        />
+        <div class="text-danger" aria-live="polite" *ngIf="signupForm.get('email')?.invalid && (signupForm.get('email')?.dirty || signupForm.get('email')?.touched)">
+          <small *ngIf="signupForm.get('email')?.errors?.['required']">Email is required.</small>
+          <small *ngIf="signupForm.get('email')?.errors?.['email']">Invalid email format.</small>
+        </div>
+      </div>
+
+      <!-- Password Field with toggle -->
+      <div class="form-group mb-3 position-relative">
+        <label for="password" class="form-label fw-semibold">Password</label>
+        <input
+          [type]="showPassword ? 'text' : 'password'"
+          id="password"
+          class="form-control pe-5"
+          formControlName="password"
+          placeholder="Enter your password"
+          autocomplete="new-password"
+          (focus)="resetSignUpError()"
+        />
+        <button
+          type="button"
+          class="btn btn-sm btn-outline-secondary position-absolute top-50 end-0 translate-middle-y me-2 password-toggle"
+          (click)="showPassword = !showPassword"
+          [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
+          tabindex="-1"
+        >
+        <i
+      class="bi"
+      [class.bi-eye]="!showPassword"
+      [class.bi-eye-slash]="showPassword"
+      style="font-size: 1.1rem;"
+    ></i>
+         <!-- {{ showPassword ? 'Hide' : 'Show' }}-->
+        </button>
+
+        <div class="text-danger" aria-live="polite" *ngIf="signupForm.get('password')?.invalid && (signupForm.get('password')?.dirty || signupForm.get('password')?.touched)">
+          <small *ngIf="signupForm.get('password')?.errors?.['required']">Password is required.</small>
+          <small *ngIf="signupForm.get('password')?.errors?.['minlength']">Minimum 6 characters.</small>
+          <small *ngIf="signupForm.get('password')?.errors?.['pattern']">Must include 1 uppercase letter and 1 number.</small>
+        </div>
+        <small class="text-muted">Password must be at least 6 characters long.</small>
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100 fw-bold" [disabled]="signupForm.invalid">Signup</button>
+
+      <div class="text-danger mt-3 text-center" aria-live="assertive" *ngIf="isSignUpFailed">
+        {{ errorMessage }}
+      </div>
+    </form>
+  </div>
+</div>
+
+
+
+
+
+<!-- <div class="container mt-5 justify-content-center">
   <div class="row justify-content-center">
     <div class="col-md-4 col-lg-4">
       <div class="card p-3 shadow">
@@ -43,4 +115,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
