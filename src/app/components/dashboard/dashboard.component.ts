@@ -17,6 +17,7 @@ export class DashboardComponent {
   extractedText = '';
   statusMessage = '';
   imagePreviewUrl: string | ArrayBuffer | null = null;
+  userId: number = 1; // Or dynamically retrieve from login/session later
 
   constructor(private ocrService: OcrService) { }
 
@@ -42,7 +43,7 @@ export class DashboardComponent {
       return;
     }
 
-    this.ocrService.uploadImage(this.selectedFile).subscribe({
+    this.ocrService.uploadImage(this.selectedFile, this.userId).subscribe({
       next: (res) => {
         console.log('Upload Success:', res)
         this.statusMessage = 'Upload successful!';

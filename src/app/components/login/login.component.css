@@ -31,3 +31,30 @@
 .text-danger {
   font-size: 13px;
 }
+
+.password-toggle {
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  padding: 0.25rem 0.35rem;
+  font-size: 13px;
+  cursor: pointer;
+  user-select: none;
+  color: #6c757d;
+}
+.password-toggle:hover {
+  color: #495057; /* slightly darker on hover */
+  background: transparent !important;
+  border: none !important;
+}
+
+.password-toggle:focus {
+  outline: none;
+  box-shadow: none;
+  border: none;
+  background: transparent;
+}

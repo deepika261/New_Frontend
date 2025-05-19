@@ -1,79 +1,24 @@
-<div class="d-flex justify-content-end align-items-center mb-2 me-3">
-  <div class="history">
-    <button class="btn btn-light border-0" type="'button"(click)="viewHistory()" >
-    History</button>
-  </div>
-  <div class="logout">
-    <button class="btn btn-warning border-0 text-danger" type="'button" (click)="logout()" >
-      LogOut</button>
-  </div> 
-</div> 
-  <!-- <div class="dropdown">
-      <button class="btn btn-light border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false" title="Menu">
-        <i class="bi bi-three-dots-vertical fs-4"></i>
-      </button>
-      <ul class="dropdown-menu dropdown-menu-end shadow-sm rounded-3">
-        <li><a class="dropdown-item" (click)="viewHistory()">History</a></li>
-        <li><a class="dropdown-item text-danger" (click)="logout()">Logout</a></li>
-      </ul>
-    </div> -->
-   
-
-<!--<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm mb-3 rounded-3 px-3">
-    <a class="navbar-brand fw-bold" routerLink="/">AI Text Extractor</a>
-  
-    <div class="ms-auto dropdown">
-      <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
-        aria-expanded="false" title="More options">
-        <i class="bi bi-three-dots-vertical fs-4"></i> 
-      </button>
-      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-        <li><a class="dropdown-item" routerLink="/profile">Profile</a></li>
-        <li><a class="dropdown-item" routerLink="/history">History</a></li>
-        <li><hr class="dropdown-divider"></li>
-        <li><a class="dropdown-item text-danger" (click)="logout()">Logout</a></li>
-      </ul>
-    </div>
-  </nav>
-  
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary rounded-3 px-3 mt-2 shadow">
-    <a class="navbar-brand fw-bold text-white" href="#">AI Text Extractor</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
+<div  style="background: linear-gradient(135deg, #f5f7fa, #c3cfe2);height: 100vh; width: 100%;">
+<!-- History and Logout Buttons -->
+  <div class="d-flex justify-content-end mb-0">
+    <button class="btn btn-primary rounded me-2" (click)="viewHistory()">
+      <i class="bi bi-clock-history me-1"></i>History
     </button>
-  
-    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-      <ul class="navbar-nav gap-3">
-        <li class="nav-item">
-          <a class="nav-link active text-white" [routerLink]="['/home']">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-white" [routerLink]="['/history']">History</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-white" [routerLink]="['/profile']">Profile</a>
-        </li>
-        <li class="nav-item">
-          <button class="btn btn-outline-light btn-sm" (click)="logout()">Logout</button>
-        </li>
-      </ul>
-    </div>
-  </nav>-->
+    <button class="btn btn-primary rounded" (click)="logout()">
+      <i class="bi bi-box-arrow-right me-1"></i>Logout
+    </button>
+  </div>
+
+<div class="container-fluid dashboard-container">
+  <h1 class="text-center ">AI Handwritten Image to Text Convertor</h1>
   
 <div class="container mt-3">
-  <h2 class="text-center mb-3"> AI Handwritten Text Extractor</h2>
-
-  <div class="card shadow-lg p-3 border-0 rounded-4">
-      <div class="mb-3">
-          <label for="fileInput" class="form-label fw-semibold">Select an Image File</label>
-          <input type="file" class="form-control" id="fileInput" (change)="onFileSelected($event)">
-      </div>
-
-      <button class="btn btn-primary w-100 mb-3 fw-bold shadow-sm custom-btn" (click)="uploadFile()"
-          title="Click to extract text from image">
-          Upload & Extract Text
-      </button>
+  <div class="card p-3 shadow-sm mb-4 upload-card">
+    <label class="form-label fw-semibold">Upload Image</label>
+    <input for="fileInput" type="file" class="form-control mb-3" (change)="onFileSelected($event)">
+    <button class="btn btn-primary rounded fw-bold" (click)="uploadFile()" title="Click to extract text from image">
+      <i class="bi bi-upload me-1"></i>Upload
+    </button>
   </div>
 
   <!--<div class="test mt-1">
@@ -121,27 +66,31 @@
               <div class="col-sm-6 col-md-6 col-lg-6 ">
                   <div class="position-relative">
                       <textarea class="form-control bg-light p-4 rounded-3 shadow-sm" rows="12" readonly
-                          style="resize: vertical; overflow-y: scroll;">{{ extractedText }}</textarea>
+                        style="resize: vertical; overflow-y: scroll;">{{ extractedText }}
+                      </textarea>
 
                       <button class="btn position-absolute top-0 end-0 m-0 px-4 py-1 d-flex align-items-center gap-1"
-                          (click)="copyText()" title="Copy to clipboard">
-                      <i class="bi" [ngClass]="copied ? 'bi-check2-circle text-success' : 'bi-clipboard'"></i>
-                      <span>{{ copied ? 'Copied!' : 'Copy' }}</span>
+                        (click)="copyText()" title="Copy to clipboard">
+                        <i class="bi" [ngClass]="copied ? 'bi-check2-circle text-success' : 'bi-clipboard'"></i>
+                        <span>{{ copied ? 'Copied!' : 'Copy' }}</span>
                       </button>
-                  
-                      <!--<button class="btn btn-outline-secondary position-absolute top-0 end-0 m-3 px-2 py-1"
-                          (click)="copyText()" title="Copy to clipboard">
-
-                      </button>-->
                   </div>
+                  
                   <div class="d-flex gap-2 mt-3 d-flex justify-content-center">
-                      <button class="btn btn-primary custom-btn" (click)="downloadFile('docx')"
+                      <button class="btn btn-primary rounded mb-2" (click)="downloadFile('docx')"
+                          title="Download as DOCX"><i class="bi bi-download me-1"></i>Download DOCX</button>
+                      <button class="btn btn-primary rounded mb-2" (click)="downloadFile('pdf')"
+                          title="Download as PDF"><i class="bi bi-download me-1"></i>Download PDF</button>
+                      <!-- <button class="btn btn-primary custom-btn" (click)="downloadFile('docx')"
                           title="Download as DOCX">Download DOCX</button>
                       <button class="btn btn-primary custom-btn" (click)="downloadFile('pdf')"
-                          title="Download as PDF">Download PDF</button>
+                          title="Download as PDF">Download PDF</button> -->
                   </div>
               </div>
           </div>
       </div>
   </div>
+</div>
+</div>
+
 </div>

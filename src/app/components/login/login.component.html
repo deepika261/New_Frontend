@@ -28,6 +28,7 @@
       <div class="form-group mb-3">
         <label for="password" class="form-label fw-semibold">Password</label>
         <input
+          [type]="showPassword ? 'text' : 'password'"
           type="password"
           autocomplete="current-password"
           class="form-control"
@@ -40,15 +41,45 @@
           #password="ngModel"
           placeholder="Enter your password"
         />
+        <button
+          type="button"
+          class="btn btn-sm btn-outline-secondary position-absolute top-50 end-0 translate-middle-y me-2 password-toggle"
+          (click)="showPassword = !showPassword"
+          [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
+          tabindex="-1"
+        >
+        <i
+      class="bi"
+      [class.bi-eye]="!showPassword"
+      [class.bi-eye-slash]="showPassword"
+      style="font-size: 1.1rem;"
+    ></i>
+         <!-- {{ showPassword ? 'Hide' : 'Show' }}-->
+        </button>
         <div class="text-danger" *ngIf="password.invalid && (password.dirty || password.touched)">
           <small *ngIf="password.errors?.['required']">Password is required.</small>
           <small *ngIf="password.errors?.['minlength']">Minimum 6 characters.</small>
         </div>
+         <button
+          type="button"
+          class="btn btn-sm btn-outline-secondary position-absolute top-50 end-0 translate-middle-y me-2 password-toggle"
+          (click)="showPassword = !showPassword"
+          [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
+          tabindex="-1"
+        >
+        <i
+      class="bi"
+      [class.bi-eye]="!showPassword"
+      [class.bi-eye-slash]="showPassword"
+      style="font-size: 1.1rem;"
+    ></i>
+         <!-- {{ showPassword ? 'Hide' : 'Show' }}-->
+        </button>
       </div>
 
       <!-- Submit Button -->
       <button class="btn btn-primary w-100 fw-bold" type="submit">Login</button>
-
+s
       <!-- Error Message -->
       <div class="text-danger mt-3 text-center"aria-live="assertive" *ngIf="isLoginFailed">
         {{ errorMessage }}
@@ -57,60 +88,3 @@
   </div>
 </div>
 
-
-
-<!-- <div class="container mt-4 center">
-  <div class="row justify-content-center">
-    <div class="col-md-4">
-      <div class="card p-3 shadow">
-        <h3 class="text-center mb-3">Login</h3>
-        <form #f="ngForm" (ngSubmit)="onLogin(f)" novalidate>
-
-          <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            <input
-              type="email"
-              class="form-control"
-              id="email"
-              name="email"
-              required
-              [(ngModel)]="form.email"
-              (focus)="resetLoginError()"
-              #email="ngModel"
-            />
-            <div class="text-danger" *ngIf="email.invalid && f.submitted">
-              <small *ngIf="email.errors?.['required']">Email is required.</small>
-              <small *ngIf="email.errors?.['email']">Invalid email format.</small>
-            </div>
-          </div>
-
-          <div class="mb-3">
-            <label for="password" class="form-label">Password</label>
-            <input
-              type="password"
-              class="form-control"
-              id="password"
-              name="password"
-              required
-              minlength="6"
-              [(ngModel)]="form.password"
-              (focus)="resetLoginError()"
-              (focus)="resetLoginError()"
-              #password="ngModel"
-            />
-            <div class="text-danger" *ngIf="password.invalid && f.submitted">
-              <small *ngIf="password.errors?.['required']">Password is required.</small>
-              <small *ngIf="password.errors?.['minlength']">Minimum 6 characters.</small>
-            </div>
-          </div>
-
-          <button class="btn btn-primary w-100" type="submit">Login</button>
-
-          <div class="text-danger mt-3 text-center" *ngIf="isLoginFailed">
-            {{ errorMessage }}
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div> -->

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';  // Import the AuthService
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -19,6 +19,8 @@ export class LoginComponent {
 
   errorMessage = '';
   isLoginFailed = false;
+  isSignUpFailed = false;
+  showPassword = false; 
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -27,28 +29,39 @@ export class LoginComponent {
       const { email, password } = this.form;
       this.authService.login(email, password).subscribe({
         next: (res) => {
-          if (res?.token) {
-            localStorage.setItem('token', res.token);
+          if (res?.statusCode === 1 && res?.userId) {
+            this.authService.saveUserId(res.userId);
+            console.log(res.userId);
+            console.log('Login successful');
             this.router.navigate(['/dashboard']);
           } else {
-            this.errorMessage = 'Invalid credentials.';
-            this.isLoginFailed = true;
+            this.showError(res?.errorMessage || 'Login failed.');
           }
         },
-        error: () => {
-          this.errorMessage = 'Login failed. Please check your credentials.';
-          this.isLoginFailed = true;
-        }
+        error: (err) => {
+  if (err.status === 400 && err.error?.errors) {
+    const errors = Object.values(err.error.errors).flat().join('\n');
+    this.showError(errors);
+  } else {
+    this.showError('Login failed. Please check your credentials or try again.');
+  }
+}
+
       });
     } else {
-      this.errorMessage = 'Please enter valid email and password.';
-      this.isLoginFailed = true;
+      this.showError('Please enter valid email and password.');
     }
   }
-  resetLoginError() {
-  this.isLoginFailed = false;
-  this.errorMessage = '';
+
+  resetLoginError(): void {
+    this.isLoginFailed = false;
+    this.errorMessage = '';
+  }
+
+  private showError(message: string): void {
+    this.errorMessage = message;
+    this.isLoginFailed = true;
+  }
 }
 
 
-}
