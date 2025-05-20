@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { HistoryService, FileItem } from '../../services/history.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from '../../services/auth.service'; // Adjust path as needed
+
 
 declare var bootstrap: any;
 
@@ -19,20 +21,45 @@ export class HistoryComponent {
   zoomedImageUrl: string | null = null;
   selectedFileName: string | null = null;
   isDataLoaded = false;
+  userId: number=0;
+  statusMessage = '';
+  //selectedText: string = "";
 
-  constructor(private historyService: HistoryService) {}
-
+  constructor(private historyService: HistoryService, private authService: AuthService) {}
+  ngOnInit(): void {
+    const storedUserId : number = Number(this.authService.getUserId());
+    console.log(storedUserId);
+    if (storedUserId) {
+      this.userId = storedUserId;
+    } else {
+      this.statusMessage = 'User not authenticated.';
+    }
+  }
   fetchHistory(): void {
-    if (!this.email) return;
-
-    this.historyService.getLast10Files(this.email).subscribe(data => {
-      this.files = data.map(file => ({
+    console.log('fetchHistory called');
+    this.files = [];
+    this.isDataLoaded=false;
+    this.historyService.getLast10Files().subscribe(data => {
+      console.log('Data received:', data);
+      this.files = data.map((file: any) => ({
          ...file,
-        imageUrl: this.convertPathToUrl(file.filePath)
+        imageUrl: this.convertPathToUrl(file.filePath),
+        fileName: file.fileName || this.extractFileName(file.filePath),
+        //id: file.id || 0
       }));
       this.isDataLoaded = true;
+    },
+    error=>{
+      console.error('Error fetching history:', error);
     });
+    
   }
+  extractFileName(filePath: string): string {
+    return filePath.split(/[/\\]/).pop() || 'unknown';
+  }
+ 
+
+
 
   convertPathToUrl(filePath: string): string {
     const fileName = filePath.split(/[/\\]/).pop();
@@ -46,11 +73,32 @@ export class HistoryComponent {
   }
 
   onExtractText(file: FileItem): void {
-    this.historyService.getExtractedText(file.id).subscribe(res => {
-      this.selectedText = res.text;
+    // If extractedText is already available, use it directly
+    if (file.extractedText) {
+      this.selectedText = file.extractedText;
       this.selectedFileName = file.fileName;
-    });
+    //   setTimeout(() => {
+    //   this.scrollToExtractedText();
+    // }, 0);
+    } else {
+      // Otherwise call backend to get it
+      this.historyService.getExtractedText(file.id).subscribe(res => {
+        this.selectedText = res.text || 'No text available';
+        this.selectedFileName = file.fileName;
+      });
+    }
   }
+// scrollToExtractedText(): void {
+//   if (this.extractedTextSection) {
+//     this.extractedTextSection.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+//   }
+// }
+  // onExtractText(file: FileItem): void {
+  //   this.historyService.getExtractedText(file.id).subscribe(res => {
+  //     this.selectedText = res.text;
+  //     this.selectedFileName = file.fileName;
+  //   });
+  // }
 
   download(type: 'pdf' | 'docx'): void {
     if (!this.selectedText || !this.selectedFileName) return;

@@ -9,6 +9,7 @@ const USER_ID_KEY = 'userId';
 })
 export class AuthService {
   private apiUrl = 'http://localhost:5085/api/User';
+  userId: number=0;
 
   constructor(private http: HttpClient) {}
 
@@ -31,11 +32,18 @@ export class AuthService {
   }
 
   saveUserId(userId: number): void {
-    localStorage.setItem(USER_ID_KEY, userId.toString());
+    this.userId = userId;
+    localStorage.setItem('userId', userId.toString());
   }
 
-  getUserId(): string | null {
-    return localStorage.getItem(USER_ID_KEY);
+  getUserId(): number | null {
+     const storedId = localStorage.getItem('userId');
+    return storedId ? parseInt(storedId, 10) : this.userId;
+  }
+
+clearUser(): void {
+    this.userId = -1;
+    localStorage.removeItem('userId');
   }
 
   logout(): void {

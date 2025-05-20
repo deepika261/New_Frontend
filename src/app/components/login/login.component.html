@@ -27,6 +27,7 @@
       <!-- Password Field -->
       <div class="form-group mb-3">
         <label for="password" class="form-label fw-semibold">Password</label>
+        <div class="input-group">
         <input
           [type]="showPassword ? 'text' : 'password'"
           type="password"
@@ -43,26 +44,7 @@
         />
         <button
           type="button"
-          class="btn btn-sm btn-outline-secondary position-absolute top-50 end-0 translate-middle-y me-2 password-toggle"
-          (click)="showPassword = !showPassword"
-          [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
-          tabindex="-1"
-        >
-        <i
-      class="bi"
-      [class.bi-eye]="!showPassword"
-      [class.bi-eye-slash]="showPassword"
-      style="font-size: 1.1rem;"
-    ></i>
-         <!-- {{ showPassword ? 'Hide' : 'Show' }}-->
-        </button>
-        <div class="text-danger" *ngIf="password.invalid && (password.dirty || password.touched)">
-          <small *ngIf="password.errors?.['required']">Password is required.</small>
-          <small *ngIf="password.errors?.['minlength']">Minimum 6 characters.</small>
-        </div>
-         <button
-          type="button"
-          class="btn btn-sm btn-outline-secondary position-absolute top-50 end-0 translate-middle-y me-2 password-toggle"
+          class="btn btn-sm btn-outline-secondary position-absolute end-0 translate-middle-y me-2 password-toggle"
           (click)="showPassword = !showPassword"
           [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
           tabindex="-1"
@@ -76,10 +58,16 @@
          <!-- {{ showPassword ? 'Hide' : 'Show' }}-->
         </button>
       </div>
+        <div class="text-danger" *ngIf="password.invalid && (password.dirty || password.touched)">
+          <small *ngIf="password.errors?.['required']">Password is required.</small>
+          <small *ngIf="password.errors?.['minlength']">Minimum 6 characters.</small>
+        </div>
+        
+      </div>
 
       <!-- Submit Button -->
       <button class="btn btn-primary w-100 fw-bold" type="submit">Login</button>
-s
+
       <!-- Error Message -->
       <div class="text-danger mt-3 text-center"aria-live="assertive" *ngIf="isLoginFailed">
         {{ errorMessage }}

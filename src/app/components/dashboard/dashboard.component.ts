@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { OcrService } from '../../services/dashboard.service';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-
+import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-ocr-uploader',
   standalone: true,
@@ -17,9 +17,17 @@ export class DashboardComponent {
   extractedText = '';
   statusMessage = '';
   imagePreviewUrl: string | ArrayBuffer | null = null;
-  userId: number = 1; // Or dynamically retrieve from login/session later
-
-  constructor(private ocrService: OcrService) { }
+  userId: number=0; // Or dynamically retrieve from login/session later
+  copied=false;
+  constructor(private ocrService: OcrService, private authService: AuthService) { }
+  ngOnInit(): void {
+    const storedUserId : number = Number(this.authService.getUserId());
+    if (storedUserId) {
+      this.userId = storedUserId;
+    } else {
+      this.statusMessage = 'User not authenticated.';
+    }
+  }
 
   onFileSelected(event: any): void {
     const file = event.target.files[0];
@@ -38,12 +46,16 @@ export class DashboardComponent {
   uploadFile(): void {
     this.statusMessage = '';
     this.extractedText = '';
+    if (!this.userId) {
+      this.statusMessage = 'User ID is missing.';
+      return;
+    }
     if (!this.selectedFile) {
       this.statusMessage = 'Please select a file.';
       return;
     }
 
-    this.ocrService.uploadImage(this.selectedFile, this.userId).subscribe({
+    this.ocrService.uploadImage(this.selectedFile).subscribe({
       next: (res) => {
         console.log('Upload Success:', res)
         this.statusMessage = 'Upload successful!';
@@ -84,7 +96,7 @@ export class DashboardComponent {
       }
     });
   }
-  copied = false;
+  
 
 copyText() {
   const textArea = document.querySelector('textarea') as HTMLTextAreaElement;
