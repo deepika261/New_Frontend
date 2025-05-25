@@ -58,12 +58,9 @@ export class HistoryComponent {
     return filePath.split(/[/\\]/).pop() || 'unknown';
   }
  
-
-
-
   convertPathToUrl(filePath: string): string {
     const fileName = filePath.split(/[/\\]/).pop();
-    return `https://localhost:44312/Uploads/${fileName}`;
+    return `http://localhost:5085/Uploads/${fileName}`;
   }
 
   openImageModal(imageUrl: string): void {
@@ -77,28 +74,8 @@ export class HistoryComponent {
     if (file.extractedText) {
       this.selectedText = file.extractedText;
       this.selectedFileName = file.fileName;
-    //   setTimeout(() => {
-    //   this.scrollToExtractedText();
-    // }, 0);
-    } else {
-      // Otherwise call backend to get it
-      this.historyService.getExtractedText(file.id).subscribe(res => {
-        this.selectedText = res.text || 'No text available';
-        this.selectedFileName = file.fileName;
-      });
-    }
+    } 
   }
-// scrollToExtractedText(): void {
-//   if (this.extractedTextSection) {
-//     this.extractedTextSection.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-//   }
-// }
-  // onExtractText(file: FileItem): void {
-  //   this.historyService.getExtractedText(file.id).subscribe(res => {
-  //     this.selectedText = res.text;
-  //     this.selectedFileName = file.fileName;
-  //   });
-  // }
 
   download(type: 'pdf' | 'docx'): void {
     if (!this.selectedText || !this.selectedFileName) return;

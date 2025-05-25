@@ -29,16 +29,6 @@ export class OcrService {
     return this.http.post(`${this.baseUrl}/upload-image`, formData);
   }
 
-
-  // uploadImage(file: File): Observable<any> {
-  //   const formData = new FormData();
-  //   formData.append('file', file);
-  //   return this.http.post(`${this.baseUrl}/upload-image`, formData);
-  // }
-
-  // getExtractedText(): Observable<{ extractedText: string }> {
-  //   return this.http.get<{ extractedText: string }>(`${this.baseUrl}/get-extracted-text`,formData);
-  // }
   getExtractedText(): Observable<{ extractedText: string }> {
     const userId = this.authService.getUserId();
     if (userId === null) {

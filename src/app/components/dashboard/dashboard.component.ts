@@ -122,7 +122,4 @@ viewHistory(): void {
   window.location.href = '/history'; // or use Angular Router: this.router.navigate(['/history']);
 }
 
-
-
-
 }
