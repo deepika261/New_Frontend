@@ -47,6 +47,7 @@ export class HistoryComponent {
         fileName: file.fileName || this.extractFileName(file.filePath),
         //id: file.id || 0
       }));
+      console.log(this.files);
       this.isDataLoaded = true;
     },
     error=>{
@@ -79,6 +80,6 @@ export class HistoryComponent {
 
   download(type: 'pdf' | 'docx'): void {
     if (!this.selectedText || !this.selectedFileName) return;
-    this.historyService.downloadText(this.selectedFileName, this.selectedText, type);
+    this.historyService.downloadText1(this.selectedFileName, this.selectedText, type);
   }
 }
