@@ -30,8 +30,9 @@ export class LoginComponent {
       this.authService.login(email, password).subscribe({
         next: (res) => {
           if (res?.statusCode === 1 && res?.userId) {
-            this.authService.saveUserId(res.userId);
+            this.authService.saveUserId(res.name, res.userId);
             console.log(res.userId);
+            console.log(res.name);
             console.log('Login successful');
             this.router.navigate(['/dashboard']);
           } else {

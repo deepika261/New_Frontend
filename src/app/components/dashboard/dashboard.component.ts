@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { OcrService} from '../../services/dashboard.service';
 import { HttpClientModule } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
+import { RouterModule,Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 //import { HistoryService} from '../../services/history.service';
 @Component({
@@ -25,11 +25,13 @@ export class DashboardComponent {
   imagePreviewUrl: string | ArrayBuffer | null = null;
   userId: number=0; // Or dynamically retrieve from login/session later
   copied: boolean=false;
-  constructor(private ocrService: OcrService, private authService: AuthService) { }
+  name:string | null=null;
+  constructor(private ocrService: OcrService, private authService: AuthService,private router:Router) { }
   ngOnInit(): void {
     const storedUserId : number = Number(this.authService.getUserId());
     if (storedUserId) {
       this.userId = storedUserId;
+      this.name=this.authService.getUserName();
     } else {
       this.statusMessage = 'User not authenticated.';
     }
@@ -182,11 +184,15 @@ logout(): void {
   // Clear any auth tokens or session data if used
   // Redirect to login page
   localStorage.clear(); // Optional: if you're storing session info
-  window.location.href = '/home'; // or use Angular router: this.router.navigate(['/login']);
+  this.router.navigate(['/dashboard']);
+
+  //window.location.href = '/home'; // or use Angular router: this.router.navigate(['/login']);
 }
 viewHistory(): void {
   // Navigate to history page (example path: '/history')
-  window.location.href = '/history'; // or use Angular Router: this.router.navigate(['/history']);
+  this.router.navigate(['/history']);
+
+  //window.location.href = '/history'; // or use Angular Router: this.router.navigate(['/history']);
 }
 showZoomModal = false;
 

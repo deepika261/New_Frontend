@@ -3,6 +3,11 @@ import { HttpClient,HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthService} from './auth.service';
 import jsPDF from 'jspdf';
+export interface FileItem {
+  id: number;
+  name: string;
+}
+
 @Injectable({ providedIn: 'root' })
 export class OcrService {
   private baseUrl = 'http://localhost:5085/api/File';
